@@ -1,16 +1,14 @@
-import { useRef } from "react";
 import QuestionaireButton from "./QuestionaireButton";
 import { IoMdArrowDropleftCircle } from "react-icons/io";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 
 const Questionaire = () => {
-  const iconRef = useRef(null);
   return (
     <div className="md:w-[60%] h-auto w-full p-8 flex flex-col gap-8 ">
-      <div className="font-poppins font-semibold md:text-2xl text-lg text-purple-900">
+      <div className="font-poppins w-full font-semibold md:text-2xl text-lg text-purple-900">
         Sample Question Here
       </div>
-      <div className="flex flex-col gap-4 justify-start items-start">
+      <div className="flex flex-col w-full gap-4 justify-start items-start">
         <QuestionaireButton letter={"A"} choice={"Choice A"} />
         <QuestionaireButton letter={"B"} choice={"Choice B"} />
         <QuestionaireButton letter={"C"} choice={"Choice C"} />
@@ -25,11 +23,11 @@ const Questionaire = () => {
         </h1>
       </div>
       <div className="flex flex-row justify-between -mt-4">
-        <button className="flex flex-row gap-2 items-center  px-4 py-2 border-2 border-purple-500 font-poppins font-semibold text-base text-purple-900 hover:shadow-md   hover:shadow-purple-200">
+        <button className="flex flex-row gap-2 items-center  px-4 py-2 border-2 border-purple-500 font-poppins font-semibold md:text-base text-sm text-purple-900 hover:shadow-md   hover:shadow-purple-200">
           <IoMdArrowDropleftCircle />
           previous
         </button>
-        <button className="flex flex-row gap-2 items-center px-4 py-2 border-2 border-purple-500 font-poppins font-semibold text-base text-purple-900 hover:shadow-md   hover:shadow-purple-200">
+        <button className="flex flex-row gap-2 items-center px-4 py-2 border-2 border-purple-500 font-poppins font-semibold md:text-base text-sm text-purple-900 hover:shadow-md   hover:shadow-purple-200">
           next
           <IoMdArrowDroprightCircle />
         </button>

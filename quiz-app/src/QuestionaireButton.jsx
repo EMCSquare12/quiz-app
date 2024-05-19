@@ -27,7 +27,7 @@ const QuestionaireButton = ({ letter, choice }) => {
       <button
         ref={iconRef}
         onClick={() => setIsClick(!isClick)}
-        className={`relative flex flex-row w-full md:h-12 h-10 border border-purple-500 font-poppins  gap-4 items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-2 focus:ring-purple-500  hover:shadow-purple-200 ${
+        className={`relative flex flex-row w-full  h-12 border border-purple-500 font-poppins  gap-4 items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-1 focus:ring-purple-500  hover:shadow-purple-200 ${
           isClick ? "bg-purple-100  " : "bg-white"
         }`}
       >
