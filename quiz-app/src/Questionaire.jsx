@@ -6,8 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Questionaire = () => {
-  const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [letterSelection, setLetterSelection] = useState({
@@ -21,20 +21,28 @@ const Questionaire = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://opentdb.com/api.php?amount=10"
-        );
-        setQuestions(data.results);
-        console.log(data.results);
+      const url = "https://opentdb.com/api.php";
+      const params = {
+        amount: 10,
+        category: 18, // Science: Computers
+        difficulty: "medium",
+        type: "multiple",
+      };
 
-        if (data.results.length > 0) {
-          const answerList = [
-            ...data.results[counter].incorrect_answers,
-            data.results[counter].correct_answer,
-          ];
-          setAnswers(answerList);
-        }
+      try {
+        const response = await axios.get(url, { params });
+        const data = response.data.results;
+
+        const formattedData = data.map((item) => ({
+          question: item.question,
+          correctAnswer: item.correct_answer,
+          answers: shuffleArray([
+            ...item.incorrect_answers,
+            item.correct_answer,
+          ]),
+        }));
+
+        setQuestions(formattedData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -43,7 +51,13 @@ const Questionaire = () => {
     };
 
     fetchQuestions();
-  }, [counter]);
+  }, []);
+
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
+  console.log(questions);
 
   const handleNext = () => {
     if (counter < questions.length - 1) {
@@ -54,17 +68,14 @@ const Questionaire = () => {
     console.log(counter);
   };
 
-  console.log(questions);
-  console.log(answers);
-
   return (
     <div className="md:w-[60%] h-auto w-full p-8 flex flex-col gap-8 ">
-      {/* <h1
-        dangerouslySetInnerHTML={{ __html: questions[counter].question }}
-        className="font-poppins w-full font-semibold md:text-2xl text-lg text-purple-900"
-      ></h1> */}
-      <div className="flex flex-col w-full gap-4 justify-start items-start">
-        {answers.map((item, index) => (
+      <h1
+        dangerouslySetInnerHTML={{ __html: questions.question[counter] }}
+        className="w-full text-lg font-semibold text-purple-900 font-poppins md:text-2xl"
+      ></h1>
+      <div className="flex flex-col items-start justify-start w-full gap-4">
+        {questions.answers[counter].map((item, index) => (
           <QuestionaireButton
             key={index}
             letter={letterSelection[index]}
@@ -72,27 +83,27 @@ const Questionaire = () => {
           />
         ))}
       </div>
-      <div className=" -mt-4 w-full h-auto flex flex-col gap-2">
+      <div className="flex flex-col w-full h-auto gap-2 -mt-4 ">
         <div className="h-4 bg-purple-200 ">
           <div
             style={{
               width: `${((counter + 1) / questions.length) * 100}%`,
             }}
-            className="h-full bg-purple-500 z-10"
+            className="z-10 h-full bg-purple-500"
           ></div>
         </div>
-        <h1 className=" right-4 top-6 text-xs text-purple-900 font-medium w-fit">
+        <h1 className="text-xs font-medium text-purple-900 right-4 top-6 w-fit">
           {counter + 1}/ {questions.length}
         </h1>
       </div>
       <div className="flex flex-row justify-between -mt-4">
-        <button className="flex flex-row gap-2 items-center  px-4 py-2 border-2 border-purple-500 font-poppins font-semibold md:text-base text-sm text-purple-900 hover:shadow-md   hover:shadow-purple-200">
+        <button className="flex flex-row items-center gap-2 px-4 py-2 text-sm font-semibold text-purple-900 border-2 border-purple-500 font-poppins md:text-base hover:shadow-md hover:shadow-purple-200">
           {counter + 1 === 1 ? null : <IoMdArrowDropleftCircle />}
           Previous
         </button>
         <button
           onClick={handleNext}
-          className="flex flex-row gap-2 items-center px-4 py-2 border-2 border-purple-500 font-poppins font-semibold md:text-base text-sm text-purple-900 hover:shadow-md   hover:shadow-purple-200"
+          className="flex flex-row items-center gap-2 px-4 py-2 text-sm font-semibold text-purple-900 border-2 border-purple-500 font-poppins md:text-base hover:shadow-md hover:shadow-purple-200"
         >
           {counter === questions.length - 1 ? "Result" : "Next"}
           <IoMdArrowDroprightCircle />
