@@ -31,11 +31,11 @@ const QuestionaireButton = ({ letter, choice }) => {
           isClick ? "bg-purple-100  " : "bg-white"
         }`}
       >
-        <span className="w-12 h-full flex items-center justify-center bg-purple-500 md:text-xl text-lg font-medium font-poppins text-white">
+        <span className="flex items-center justify-center w-12 h-full text-lg font-medium text-white bg-purple-500 md:text-xl font-poppins">
           {letter}
         </span>
         {choice}
-        <span className="absolute right-4 w-fit h-fit md:text-xl text-base text-purple-500">
+        <span className="absolute text-base text-purple-500 right-4 w-fit h-fit md:text-xl">
           {isClick ? <FaRegCircleCheck /> : <FaRegCircle />}
         </span>
       </button>

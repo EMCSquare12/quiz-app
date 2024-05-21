@@ -6,7 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Questionaire = () => {
-  const [answers, setAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,6 +31,7 @@ const Questionaire = () => {
       try {
         const response = await axios.get(url, { params });
         const data = response.data.results;
+        console.log(data)
 
         const formattedData = data.map((item) => ({
           question: item.question,
