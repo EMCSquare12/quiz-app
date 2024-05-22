@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const Questionaire = () => {
   const [questions, setQuestions] = useState([]);
+  const [answerIndex, setAnswerIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [letterSelection, setLetterSelection] = useState({
@@ -15,34 +18,30 @@ const Questionaire = () => {
     2: "C",
     3: "D",
   });
-  const [counter, setCounter] = useState(0);
-  const navigate = useNavigate();
+  const [answers, setAnswers] = useState({
+    selectedAnswer: [],
+    correct: [],
+    result: [],
+  });
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const url = "https://opentdb.com/api.php";
-      const params = {
-        amount: 10,
-        category: 18, // Science: Computers
-        difficulty: "medium",
-        type: "multiple",
-      };
-
       try {
-        const response = await axios.get(url, { params });
-        const data = response.data.results;
-        console.log(data)
+        const url = "https://the-trivia-api.com/v2/questions";
+        const response = await axios.get(url);
+        const data = response.data;
+        console.log(data);
 
         const formattedData = data.map((item) => ({
           question: item.question,
-          correctAnswer: item.correct_answer,
-          answers: shuffleArray([
-            ...item.incorrect_answers,
-            item.correct_answer,
-          ]),
+          answers: shuffleArray([...item.incorrectAnswers, item.correctAnswer]),
         }));
+        const correctAnswer = data.map((item) => item.correctAnswer);
 
         setQuestions(formattedData);
+        setAnswers({
+          correct: correctAnswer,
+        });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -53,33 +52,56 @@ const Questionaire = () => {
     fetchQuestions();
   }, []);
 
+  console.log(answers.correct);
+  console.log(questions[counter]);
+
   const shuffleArray = (array) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
-  console.log(questions);
-
   const handleNext = () => {
+    let copySelectedAnswer = [];
+    let copyResult = [];
+
+    const selectedAnswer = answers.correct[counter];
+    const correctAnswerIndex =
+      questions[counter].answers.indexOf(selectedAnswer);
+    console.log(selectedAnswer, correctAnswerIndex);
+
+    if (Array.isArray(answers.selectedAnswer)) {
+      copySelectedAnswer = [...answers.selectedAnswer];
+    }
+    if (Array.isArray(answers.result)) {
+      copyResult = [...answers.result];
+    }
+
+    copySelectedAnswer.push(answerIndex);
+    copyResult.push(correctAnswerIndex === answerIndex);
+
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      selectedAnswer: copySelectedAnswer,
+      result: copyResult,
+    }));
     if (counter < questions.length - 1) {
-      setCounter((counter) => counter + 1);
+      setCounter((prevCounter) => prevCounter + 1);
     } else {
       navigate("/results");
     }
-    console.log(counter);
   };
 
   return (
     <div className="md:w-[60%] h-auto w-full p-8 flex flex-col gap-8 ">
-      <h1
-        dangerouslySetInnerHTML={{ __html: questions.question[counter] }}
-        className="w-full text-lg font-semibold text-purple-900 font-poppins md:text-2xl"
-      ></h1>
+      <h1 className="w-full text-lg font-semibold text-purple-900 font-poppins md:text-2xl">
+        {questions[counter].question.text}
+      </h1>
       <div className="flex flex-col items-start justify-start w-full gap-4">
-        {questions.answers[counter].map((item, index) => (
+        {questions[counter].answers.map((item, index) => (
           <QuestionaireButton
             key={index}
             letter={letterSelection[index]}
             choice={item}
+            selectedAnswer={() => setAnswerIndex(index)}
           />
         ))}
       </div>

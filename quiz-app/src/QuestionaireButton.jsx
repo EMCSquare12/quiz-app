@@ -3,7 +3,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa6";
 
-const QuestionaireButton = ({ letter, choice }) => {
+const QuestionaireButton = ({ letter, choice, selectedAnswer }) => {
   const [isClick, setIsClick] = useState(false);
   const iconRef = useRef(null);
 
@@ -22,11 +22,16 @@ const QuestionaireButton = ({ letter, choice }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isClick]);
+
+  const handleAnswer = (value) => {
+    selectedAnswer(value);
+    setIsClick(!isClick);
+  };
   return (
     <>
       <button
         ref={iconRef}
-        onClick={() => setIsClick(!isClick)}
+        onClick={handleAnswer}
         className={`relative flex flex-row w-full  h-12 border border-purple-500 font-poppins  gap-4 items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-1 focus:ring-purple-500  hover:shadow-purple-200 ${
           isClick ? "bg-purple-100  " : "bg-white"
         }`}

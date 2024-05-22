@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 function App() {
   return (
     <>
-      <div className="bg-purple-50 w-full h-full min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center w-full h-full min-h-screen bg-purple-50">
         <Router>
           <Routes>
             <Route path="/" element={<Questionaire />} />
