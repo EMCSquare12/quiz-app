@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Questionaire = () => {
+const Questionaire = ({ callbackQuestions, callbackAnswer }) => {
   const [questions, setQuestions] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
   const [counter, setCounter] = useState(0);
@@ -19,9 +19,9 @@ const Questionaire = () => {
     3: "D",
   });
   const [answers, setAnswers] = useState({
-    selectedAnswer: [],
-    correct: [],
-    result: [],
+    selectedAnswerIndex: [],
+    resultAnswer: [],
+    correctAnswerIndex: [],
   });
 
   useEffect(() => {
@@ -35,13 +35,11 @@ const Questionaire = () => {
         const formattedData = data.map((item) => ({
           question: item.question,
           answers: shuffleArray([...item.incorrectAnswers, item.correctAnswer]),
+          correctAnswer: item.correctAnswer,
         }));
-        const correctAnswer = data.map((item) => item.correctAnswer);
 
         setQuestions(formattedData);
-        setAnswers({
-          correct: correctAnswer,
-        });
+        callbackQuestions(formattedData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -52,37 +50,49 @@ const Questionaire = () => {
     fetchQuestions();
   }, []);
 
+  useEffect(() => {
+    if (questions.length > 0) {
+      const correctAnswerIndices = questions.map((item) =>
+        item.answers.indexOf(item.correctAnswer)
+      );
+      setAnswers((prevValue) => ({
+        ...prevValue,
+        correctAnswerIndex: correctAnswerIndices,
+      }));
+      callbackAnswer((prevValue) => ({
+        ...prevValue,
+        correctAnswerIndex: correctAnswerIndices,
+      }));
+    }
+  }, [questions]);
+
   console.log(answers.correct);
   console.log(questions[counter]);
+  console.log(answers.correctAnswerIndex);
 
   const shuffleArray = (array) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
   const handleNext = () => {
-    let copySelectedAnswer = [];
-    let copyResult = [];
+    const selectedAnswer = [...answers.selectedAnswerIndex];
+    const result = [...answers.resultAnswer];
+    const correctAnswerIndex = [...answers.correctAnswerIndex];
 
-    const selectedAnswer = answers.correct[counter];
-    const correctAnswerIndex =
-      questions[counter].answers.indexOf(selectedAnswer);
-    console.log(selectedAnswer, correctAnswerIndex);
-
-    if (Array.isArray(answers.selectedAnswer)) {
-      copySelectedAnswer = [...answers.selectedAnswer];
-    }
-    if (Array.isArray(answers.result)) {
-      copyResult = [...answers.result];
-    }
-
-    copySelectedAnswer.push(answerIndex);
-    copyResult.push(correctAnswerIndex === answerIndex);
+    selectedAnswer.push(answerIndex);
+    result.push(correctAnswerIndex[counter] === selectedAnswer[counter]);
 
     setAnswers((prevAnswers) => ({
       ...prevAnswers,
-      selectedAnswer: copySelectedAnswer,
-      result: copyResult,
+      selectedAnswerIndex: selectedAnswer,
+      resultAnswer: result,
     }));
+    callbackAnswer((prevAnswers) => ({
+      ...prevAnswers,
+      selectedAnswerIndex: selectedAnswer,
+      resultAnswer: result,
+    }));
+
     if (counter < questions.length - 1) {
       setCounter((prevCounter) => prevCounter + 1);
     } else {

@@ -1,22 +1,22 @@
 import ResultCard from "./ResultCard";
 
-const ScoreResult = () => {
+const ScoreResult = ({ questions, answers }) => {
+  console.log(questions);
   return (
     <div className="md:w-[80%] h-auto w-full p-8 flex flex-col gap-8  items-center ">
-      <h1 className="font-poppins font-bold text-xl md:text-2xl text-purple-900 w-fit mb-4">
+      <h1 className="mb-4 text-xl font-bold text-purple-900 font-poppins md:text-2xl w-fit">
         Score: 9/10
       </h1>
-      <div className="w-full h-auto grid md:grid-cols-2 grid-cols-1 gap-4 md:gap-8">
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
-        <ResultCard />
+      <div className="grid w-full h-auto grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
+        {questions.map((items, index) => (
+          <ResultCard
+            key={index}
+            questions={questions}
+            answers={answers}
+            questionTitle={items.question.text}
+            id={index}
+          />
+        ))}
       </div>
     </div>
   );
