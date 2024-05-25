@@ -1,13 +1,16 @@
 import { useState } from "react";
-import Questionaire from "./Questionaire";
-import ScoreResult from "./ScoreResult";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Questionaire from "./pages/Questionaire";
+import ScoreResult from "./pages/ScoreResult";
+import HomePage from "./pages/HomePage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [answers, setAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [data, setData] = useState([]);
   console.log(answers);
   console.log(questions);
+
   return (
     <>
       <div className="flex items-center justify-center w-full h-full min-h-screen bg-purple-50">
@@ -15,20 +18,18 @@ function App() {
           <Routes>
             <Route
               path="/"
+              element={<HomePage callBackData={(value) => setData(value)} />}
+            />
+            <Route
+              path="/questionaire"
               element={
                 <Questionaire
-                  callbackAnswer={(value) => {
-                    setAnswers(value);
-                    console.log(value);
-                  }}
-                  callbackQuestions={(value) => {
-                    setQuestions(value);
-                    console.log(value);
-                  }}
+                  callbackAnswer={(value) => setAnswers(value)}
+                  callbackQuestions={(value) => setQuestions(value)}
+                  data={data}
                 />
               }
             />
-            <Route path="/questionaire" element={<Questionaire />} />
             <Route
               path="/results"
               element={<ScoreResult questions={questions} answers={answers} />}

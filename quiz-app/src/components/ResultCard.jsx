@@ -12,16 +12,18 @@ const ResultCard = ({ questions, answers, questionTitle, id }) => {
   });
   return (
     <div
-      className={`flex flex-col justify-center gap-2 p-2 bg-white border  shadow md:gap-4 md:p-4  ${
-        answers.resultAnswer[id] ? "border-green-500 shadow-green-200" : "border-red-500 shadow-red-200"
+      className={`flex flex-col justify-between gap-4 p-2 bg-gray-50 border  shadow md:gap-6 md:p-4  ${
+        answers.resultAnswer[id]
+          ? "border-green-500 shadow-green-200"
+          : "border-red-500 shadow-red-200"
       }`}
     >
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex flex-row items-start justify-between">
         <h1 className="text-sm font-medium text-purple-900 font-poppins md:text-base">
           {questionTitle}
         </h1>
         <span
-          className={`mx-2 text-sm  md:text-lg md:mx-4 ${
+          className={`mx-2 text-sm  md:text-lg md:mx-4  ${
             answers.resultAnswer[id] ? "text-green-500" : "text-red-500"
           }`}
         >
@@ -33,15 +35,19 @@ const ResultCard = ({ questions, answers, questionTitle, id }) => {
         </span>
       </div>
 
-      {questions[id].answers.map((items, index) => (
-        <ResultButton
-          key={index}
-          letter={letterSelection[index]}
-          choice={items}
-          questions={questions}
-          answers={answers}
-        />
-      ))}
+      <div className="flex flex-col gap-2 md:gap-4">
+        {questions[id].answers.map((items, index) => (
+          <ResultButton
+            key={index}
+            letter={letterSelection[index]}
+            choice={items}
+            questions={questions}
+            answers={answers}
+            id={index}
+            length={id}
+          />
+        ))}
+      </div>
     </div>
   );
 };

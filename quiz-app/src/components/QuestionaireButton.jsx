@@ -40,9 +40,9 @@ const QuestionaireButton = ({ letter, choice, selectedAnswer }) => {
           {letter}
         </span>
         {choice}
-        <span className="absolute text-base text-purple-500 right-4 w-fit h-fit md:text-xl">
+        <p className="absolute text-base text-purple-500 right-4 w-fit h-fit md:text-xl">
           {isClick ? <FaRegCircleCheck /> : <FaRegCircle />}
-        </span>
+        </p>
       </button>
     </>
   );
