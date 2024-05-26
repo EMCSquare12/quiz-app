@@ -138,7 +138,7 @@ const HomePage = ({ callBackData }) => {
                 <>
                   <button
                     type="text"
-                    className="flex flex-row items-center gap-2 px-4 py-2 text-sm font-semibold text-purple-600 bg-purple-100 font-poppins md:text-base"
+                    className="flex flex-row items-center justify-between px-4 py-2 text-sm font-semibold text-purple-600 bg-purple-100 w-28 font-poppins md:text-base"
                     readOnly
                     onClick={() => setIsOpen(!isOpen)}
                   >
@@ -148,7 +148,7 @@ const HomePage = ({ callBackData }) => {
                     </span>
                   </button>
                   {isOpen && (
-                    <ul className="absolute top-[100%] z-20  shadow shadow-purple-200 border border-purple-200">
+                    <ul className="absolute top-[100%] z-20 w-28  shadow shadow-purple-200 border border-purple-200">
                       {quizOption.difficulties.map((item, index) => (
                         <li
                           onClick={() => setDifficulty(item)}

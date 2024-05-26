@@ -11,11 +11,11 @@ const ScoreResult = ({ questions, answers }) => {
   };
   console.log(questions);
   return (
-    <div className="md:w-[80%] h-auto w-full p-8 flex flex-col gap-8  items-center ">
+    <div className="md:w-[80%] h-auto w-full md:p-8 p-4 flex flex-col gap-8  items-center ">
       <h1 className="mb-4 text-xl font-bold text-purple-900 font-poppins md:text-2xl w-fit">
         {`Score: ${countCorrectAnswer()}/${questions.length}`}
       </h1>
-      <div className="grid w-full h-auto grid-cols-1 gap-4 md:grid-cols-2 md:gap-12">
+      <div className="grid w-full h-auto grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
         {questions.map((items, index) => (
           <ResultCard
             key={index}
