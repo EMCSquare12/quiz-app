@@ -49,7 +49,7 @@ const HomePage = ({ callBackData }) => {
         const response = await axios.get(url, { params });
         const data = response.data;
         callBackData(data);
-        console.log(data)
+        console.log(data);
       } catch (err) {
         console.log(err.message);
       }
@@ -113,9 +113,9 @@ const HomePage = ({ callBackData }) => {
       <h1 className="text-xl font-bold text-purple-900 font-poppins md:text-4xl">
         MindMaze
       </h1>
-      <div className="flex md:flex-row flex-col w-full h-auto border border-purple-200 shadow bg-gray-50 md:w-[70%] shadow-purple-200">
+      <div className="flex md:flex-row flex-col w-full h-auto  border border-purple-200 shadow bg-gray-50 md:w-[70%] shadow-purple-200">
         <div className="flex flex-col w-full h-full">
-          <div className="flex items-center w-full h-auto gap-4 p-4 px-4 py-6 border-b border-purple-200 justify-Start md:px-8">
+          <div className="flex items-center w-full h-auto gap-4 p-4 border-b border-purple-200 justify-Start md:p-12">
             <h1 className="text-sm font-bold text-purple-900 font-poppins md:text-base">
               Difficulties:
             </h1>
@@ -168,7 +168,7 @@ const HomePage = ({ callBackData }) => {
               )}
             </div>
           </div>
-          <div className="flex flex-col h-full px-4 py-4 bg-gray-50 md:py-6 md:px-8">
+          <div className="flex flex-col justify-between h-full p-4 bg-gray-50 md:p-12">
             <h1 className="text-sm font-bold text-purple-900 font-poppins h-fit w-fit md:text-base">
               Categories:
             </h1>
@@ -190,7 +190,7 @@ const HomePage = ({ callBackData }) => {
             </div>
           </div>
         </div>
-        <div className="md:w-[50%] w-full  bg-purple-100 md:border-l border-l-transparent md:border-t-transparent border-t border-purple-200 gap-8 flex flex-col h-full px-4 py-8 md:px-8">
+        <div className="md:w-[50%] w-full  bg-purple-100 md:border-l border-l-transparent md:border-t-transparent border-t border-purple-200 gap-8 flex flex-col h-full p-4 md:p-12">
           <div className="flex flex-col justify-between h-full gap-3 md:gap-8">
             {width > 768 && (
               <div className="flex flex-col gap-4">

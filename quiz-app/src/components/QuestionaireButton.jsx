@@ -39,11 +39,11 @@ const QuestionaireButton = ({
       <button
         ref={clickRef}
         onClick={handleAnswer}
-        className={`relative flex flex-row w-full pr-10 text-left  h-12 border border-purple-500 font-poppins  gap-4 items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-1 focus:ring-purple-500  hover:shadow-purple-200 ${
+        className={`relative flex flex-row w-full pr-10 pl-16 text-left py-2 min-h-12 border border-purple-500 font-poppins items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-1 focus:ring-purple-500  hover:shadow-purple-200 ${
           isClick || btnIndex ? "bg-purple-100  " : "bg-white"
         }`}
       >
-        <span className="flex items-center justify-center h-full text-lg font-medium text-white bg-purple-500 min-w-12 md:text-xl font-poppins">
+        <span className="absolute left-0 flex items-center justify-center h-auto text-lg font-medium text-white bg-purple-500 md:h-full min-w-12 md:text-xl font-poppins">
           {letter}
         </span>
         {choice}

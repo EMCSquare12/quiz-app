@@ -150,9 +150,12 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
   console.log(answerIndex);
   return (
     <div className="md:w-[60%] h-auto w-full md:p-8 p-4 flex flex-col gap-8 ">
-      <h1 className="w-full text-lg font-semibold text-purple-900 font-poppins md:text-2xl">
+      <h1 className="w-full text-lg font-bold text-purple-900 font-poppins md:text-2xl">{`Question ${
+        counter + 1
+      }`}</h1>
+      <p className="w-full text-lg font-semibold text-purple-900 font-poppins md:text-xl">
         {questions[counter].question}
-      </h1>
+      </p>
       <div className="flex flex-col items-start justify-start w-full gap-4">
         {questions[counter].answers.map((item, index) => (
           <QuestionaireButton

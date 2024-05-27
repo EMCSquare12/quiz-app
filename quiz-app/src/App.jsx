@@ -3,6 +3,7 @@ import Questionaire from "./pages/Questionaire";
 import ScoreResult from "./pages/ScoreResult";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Footer from "./components/Footer";
 
 function App() {
   const [answers, setAnswers] = useState([]);
@@ -37,6 +38,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <Footer/>
     </>
   );
 }
