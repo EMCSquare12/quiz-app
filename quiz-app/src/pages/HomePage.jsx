@@ -49,7 +49,7 @@ const HomePage = ({ callBackData }) => {
         const response = await axios.get(url, { params });
         const data = response.data;
         callBackData(data);
-        console.log(data);
+        console.log(data)
       } catch (err) {
         console.log(err.message);
       }

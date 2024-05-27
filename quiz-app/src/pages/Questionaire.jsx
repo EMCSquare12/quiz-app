@@ -14,7 +14,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
       question: "",
     },
   ]);
-  const [answerIndex, setAnswerIndex] = useState(null);
+  const [answerIndex, setAnswerIndex] = useState(undefined);
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   const [isClickOutside, setIsClickOutside] = useState(false);
@@ -27,6 +27,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     correctAnswerIndex: [],
   });
 
+  //Get data from data props
   useEffect(() => {
     const formattedData = data.map((item) => ({
       answers: shuffleArray([...item.incorrectAnswers, item.correctAnswer]),
@@ -37,6 +38,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     callbackQuestions(formattedData);
   }, []);
 
+  //setValue from data props to setAnswers state
   useEffect(() => {
     if (questions.length > 0) {
       const correctAnswerIndices = questions.map((item) =>
@@ -53,14 +55,16 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     }
   }, [questions]);
 
+  //Set Value of answerIndex if isClickOutside props is true, else return answerIndex value
   useEffect(() => {
-    if (isClickRef.current) {
+    if (isClickRef.current || previewRef.current) {
       return;
     } else {
-      setAnswerIndex(isClickOutside !== true ? null : answerIndex);
+      setAnswerIndex(isClickOutside ? answerIndex : undefined);
     }
   }, [isClickOutside]);
 
+  // set IsClickPreview value to false if its click outside its component
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (previewRef.current && !previewRef.current.contains(event.target)) {
@@ -81,51 +85,61 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
+  //onclick function for Next button
   const handleNext = () => {
+    // Make copies of the arrays to work with
     const selectedAnswer = [...answers.selectedAnswerIndex];
     const result = [...answers.resultAnswer];
     const correctAnswerIndex = [...answers.correctAnswerIndex];
-
-    if (answers.selectedAnswerIndex.length < questions.length) {
-      selectedAnswer.push(answerIndex);
-      result.push(correctAnswerIndex[counter] === selectedAnswer[counter]);
-    }
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      selectedAnswerIndex: selectedAnswer,
-      resultAnswer: result,
-    }));
-    callbackAnswer((prevAnswers) => ({
-      ...prevAnswers,
-      selectedAnswerIndex: selectedAnswer,
-      resultAnswer: result,
-    }));
-    setAnswerIndex(null);
-
-    console.log(answers.selectedAnswerIndex);
-
     if (counter < questions.length - 1) {
       setCounter((prevCounter) => prevCounter + 1);
     } else {
       navigate("/results");
     }
+
+    if (selectedAnswer.length < questions.length) {
+      if (counter < selectedAnswer.length) {
+        selectedAnswer[counter] = answerIndex;
+        result[counter] = correctAnswerIndex[counter] === answerIndex;
+      } else {
+        selectedAnswer.push(answerIndex);
+        result.push(correctAnswerIndex[counter] === answerIndex);
+      }
+    }
+
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      selectedAnswerIndex: selectedAnswer,
+      resultAnswer: result,
+    }));
+
+    callbackAnswer((prevAnswers) => ({
+      ...prevAnswers,
+      selectedAnswerIndex: selectedAnswer,
+      resultAnswer: result,
+    }));
+
+    setAnswerIndex(selectedAnswer[counter + 1]);
+
+    console.log(selectedAnswer);
   };
 
+  // onDoubleClick function for Preview Button
   const handleDoubleClickPreview = () => {
     if (counter < questions.length && counter > 0) {
       setCounter((prevCounter) => prevCounter - 1);
     }
   };
 
-  const handleClickPreview = () => {
-    setIsClickPreview(!isClickPreview);
-  };
-
+  //onClick function for List in Preview Button
   const handlePreviewList = (index) => {
     setCounter(index);
     console.log(index);
+
     setIsClickPreview(false);
   };
+
+  //Letter Selection for question
   const letterSelection = {
     0: "A",
     1: "B",
@@ -133,7 +147,6 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     3: "D",
   };
 
-  console.log(counter);
   console.log(answerIndex);
   return (
     <div className="md:w-[60%] h-auto w-full md:p-8 p-4 flex flex-col gap-8 ">
@@ -148,6 +161,11 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
             choice={item}
             selectedAnswer={() => setAnswerIndex(index)}
             isClickOutside={(value) => setIsClickOutside(value)}
+            btnIndex={
+              isClickOutside === false
+                ? answers.selectedAnswerIndex[counter] === index
+                : false
+            }
           />
         ))}
       </div>
@@ -178,13 +196,14 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
             <ul className="absolute bottom-[100%] flex flex-col-reverse w-40 max-h-[200px] overflow-y-auto z-10">
               {answers.selectedAnswerIndex.map((_, index) => (
                 <li
+                  ref={isClickRef}
                   key={index}
                   onClick={() => handlePreviewList(index)}
                   className="flex flex-row items-center justify-between w-auto gap-2 px-4 py-2 text-sm font-semibold text-purple-900 border border-purple-200 shadow bg-purple-50 shadow-purple-200 font-poppins md:text-sm hover:bg-purple-200"
                 >
                   {`Question ${index + 1}`}{" "}
                   <span>
-                    {answers.selectedAnswerIndex[index] !== null ? (
+                    {answers.selectedAnswerIndex[index] !== undefined ? (
                       <FaCheck className="text-green-500" />
                     ) : (
                       <FaRegCircle className="text-purple-900" />
@@ -195,7 +214,8 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
             </ul>
           ) : null}
           <button
-            onClick={handleClickPreview}
+            ref={isClickRef}
+            onClick={() => setIsClickPreview(!isClickPreview)}
             onDoubleClick={handleDoubleClickPreview}
             className="flex flex-row items-center gap-2 px-4 py-2 text-sm font-semibold text-purple-900 border-2 border-purple-500 font-poppins md:text-base hover:shadow-md hover:shadow-purple-200"
           >

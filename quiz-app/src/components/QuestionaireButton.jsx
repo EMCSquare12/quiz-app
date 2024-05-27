@@ -7,6 +7,7 @@ const QuestionaireButton = ({
   choice,
   selectedAnswer,
   isClickOutside,
+  btnIndex,
 }) => {
   const [isClick, setIsClick] = useState(false);
   const clickRef = useRef(null);
@@ -39,7 +40,7 @@ const QuestionaireButton = ({
         ref={clickRef}
         onClick={handleAnswer}
         className={`relative flex flex-row w-full pr-10 text-left  h-12 border border-purple-500 font-poppins  gap-4 items-center md:text-base text-sm text-purple-900 hover:shadow-md focus:ring-1 focus:ring-purple-500  hover:shadow-purple-200 ${
-          isClick ? "bg-purple-100  " : "bg-white"
+          isClick || btnIndex ? "bg-purple-100  " : "bg-white"
         }`}
       >
         <span className="flex items-center justify-center h-full text-lg font-medium text-white bg-purple-500 min-w-12 md:text-xl font-poppins">
@@ -47,7 +48,7 @@ const QuestionaireButton = ({
         </span>
         {choice}
         <p className="absolute text-base text-purple-500 right-4 w-fit h-fit md:text-xl">
-          {isClick ? <FaRegCircleCheck /> : <FaRegCircle />}
+          {isClick || btnIndex ? <FaRegCircleCheck /> : <FaRegCircle />}
         </p>
       </button>
     </>
