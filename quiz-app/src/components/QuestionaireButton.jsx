@@ -43,7 +43,7 @@ const QuestionaireButton = ({
           isClick || btnIndex ? "bg-purple-100  " : "bg-white"
         }`}
       >
-        <span className="absolute left-0 flex items-center justify-center h-auto text-lg font-medium text-white bg-purple-500 md:h-full min-w-12 md:text-xl font-poppins">
+        <span className="absolute left-0 flex items-center justify-center h-full text-lg font-medium text-white bg-purple-500 md:h-full min-w-12 md:text-xl font-poppins">
           {letter}
         </span>
         {choice}

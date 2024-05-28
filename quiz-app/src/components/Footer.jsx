@@ -5,7 +5,7 @@ import { SiGmail } from "react-icons/si";
 
 const Footer = () => {
   return (
-    <div className="flex flex-row gap-8 p-4 md:p-6 bg-purple-50">
+    <div className=" flex flex-row items-center w-full gap-8 bg-purple-200 pl-6  h-[8vh]">
       <h1 className="flex flex-row items-center gap-2 text-sm font-medium text-purple-600 md:text-base font-poppins">
         <FaCopyright />
         MindMaze by{" "}
