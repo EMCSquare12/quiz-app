@@ -8,4 +8,10 @@ export default defineConfig({
     host: "0.0.0.0", // Binds to all network interfaces
     port: 3000, // Change this if you need a different port
   },
+  build: {
+    outDir: "dist",
+    rollupOptions: {
+      // Customize the options as needed
+    },
+  },
 });
