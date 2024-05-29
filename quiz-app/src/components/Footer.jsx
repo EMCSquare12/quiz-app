@@ -18,11 +18,11 @@ const Footer = () => {
             <FaGithub />
           </a>
         </li>
-        <li className="text-base text-purple-900 md:text-lg">
+        {/* <li className="text-base text-purple-900 md:text-lg">
           <a href="mailto:ninelcaalim12@gmail.com" target="_blank">
             <SiGmail />
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
