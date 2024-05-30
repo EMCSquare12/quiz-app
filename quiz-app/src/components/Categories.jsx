@@ -30,7 +30,7 @@ const Categories = ({ onCategory, onCategories }) => {
       .replace(/ And /g, " and ");
   };
   return (
-    <div className="flex flex-col justify-between h-full p-4 bg-gray-50 md:p-12">
+    <div className="flex flex-col justify-between h-full p-4 bg-gray-50 md:p-8">
       <h1 className="text-sm font-bold text-purple-900 font-poppins h-fit w-fit md:text-base">
         Categories:
       </h1>

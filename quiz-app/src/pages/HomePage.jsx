@@ -98,7 +98,7 @@ const HomePage = ({ callBackData }) => {
             onCategories={(value) => setCategories(value)}
           />
         </div>
-        <div className="md:w-[50%] w-full  bg-purple-100 md:border-l border-l-transparent md:border-t-transparent border-t border-purple-200 gap-8 flex flex-col h-full p-4 md:p-12">
+        <div className="md:w-[50%] w-full  bg-purple-100 md:border-l border-l-transparent md:border-t-transparent border-t border-purple-200 gap-8 flex flex-col h-full p-4 md:p-8">
           <PlayGameDashboard
             width={width}
             isShow={isShow}

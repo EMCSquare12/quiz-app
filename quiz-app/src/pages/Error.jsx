@@ -1,4 +1,4 @@
-import Error404 from "../assets/404-error.png";
+import Error404 from "../assets/404_error.png";
 const Error = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4 md:gap-8">

@@ -20,7 +20,7 @@ const Difficulties = ({ onDifficulty, width, isOpen, listRef, onIsOpen }) => {
     onDifficulty(value);//callback function for Difficulty
   };
   return (
-    <div className="flex items-center w-full h-auto gap-4 p-4 border-b border-purple-200 justify-Start md:p-12">
+    <div className="flex items-center w-full h-auto gap-4 p-4 border-b border-purple-200 justify-Start md:p-8">
       <h1 className="text-sm font-bold text-purple-900 font-poppins md:text-base">
         Difficulties:
       </h1>
