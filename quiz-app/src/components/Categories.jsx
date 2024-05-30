@@ -1,27 +1,27 @@
 import quizOption from "./quizOption";
 import { useState } from "react";
 
-const Categories = ({ onCategory, onCategories }) => {
-  const [category, setCategory] = useState(quizOption.categories[0]);
-  const [categories, setCategories] = useState([category]);
+const Categories = ({ onCategory, onCategories, categories, category }) => {
+  // const [category, setCategory] = useState("");
+  // const [categories, setCategories] = useState([]);
 
   const handleCategoryOnclick = (value) => {
-    const categoriesCopy = [...categories];//Shallow copy of categories
+    const categoriesCopy = [...categories]; //Shallow copy of categories
 
     if (categoriesCopy.includes(value)) {
       const updatedCategories = categoriesCopy.filter((item) => item !== value);
-      setCategories(updatedCategories);
+      // setCategories(updatedCategories);
       onCategories(updatedCategories);
     } else {
-      setCategories([...categoriesCopy, value]);
+      // setCategories([...categoriesCopy, value]);
       onCategories([...categoriesCopy, value]);
     }
 
-    setCategory(value);
+    // setCategory(value);
     onCategory(value);
   };
 
-    //Transform the first letter of text toUpperCase, and toLowerCase for AND word
+  //Transform the first letter of text toUpperCase, and toLowerCase for AND word
   const textUpperCase = (text) => {
     return text
       .split("_")

@@ -96,16 +96,20 @@ const HomePage = ({ callBackData }) => {
           <Categories
             onCategory={(value) => setCategory(value)}
             onCategories={(value) => setCategories(value)}
+            categories={categories}
+            category={category}
           />
         </div>
         <div className="md:w-[50%] w-full  bg-purple-100 md:border-l border-l-transparent md:border-t-transparent border-t border-purple-200 gap-8 flex flex-col h-full p-4 md:p-8">
           <PlayGameDashboard
             width={width}
             isShow={isShow}
-            ononIsShow={(value) => setIsShow(value)}
+            onIsShow={(value) => setIsShow(value)}
             difficulty={difficulty}
             categories={categories}
-            onCategories={(value) => setCategories(value)}
+            onCategories={(value) => {
+              setCategories(value), console.log(value);
+            }}
           />
         </div>
       </div>

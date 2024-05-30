@@ -6,7 +6,7 @@ import { FaAngleUp } from "react-icons/fa6";
 const Difficulties = ({ onDifficulty, width, isOpen, listRef, onIsOpen }) => {
   const [difficulty, setDifficulty] = useState(quizOption.difficulties[0]);
 
-    //Transform the first letter of text toUpperCase, and toLowerCase for AND word
+  //Transform the first letter of text toUpperCase, and toLowerCase for AND word
   const textUpperCase = (text) => {
     return text
       .split("_")
@@ -17,7 +17,7 @@ const Difficulties = ({ onDifficulty, width, isOpen, listRef, onIsOpen }) => {
 
   const handleDifficulty = (value) => {
     setDifficulty(value);
-    onDifficulty(value);//callback function for Difficulty
+    onDifficulty(value); //callback function for Difficulty
   };
   return (
     <div className="flex items-center w-full h-auto gap-4 p-4 border-b border-purple-200 justify-Start md:p-8">
@@ -43,7 +43,7 @@ const Difficulties = ({ onDifficulty, width, isOpen, listRef, onIsOpen }) => {
           <>
             <button
               type="text"
-              className="flex flex-row items-center justify-between px-4 py-2 text-sm font-semibold text-purple-600 bg-purple-100 w-28 font-poppins md:text-base"
+              className="flex flex-row items-center justify-between px-4 py-2 text-sm font-semibold text-purple-900 bg-purple-300 w-28 font-poppins md:text-base"
               readOnly
               onClick={() => onIsOpen(!isOpen)}
             >
@@ -56,7 +56,7 @@ const Difficulties = ({ onDifficulty, width, isOpen, listRef, onIsOpen }) => {
               <ul className="absolute top-[100%] z-20 w-28  shadow shadow-purple-200 border border-purple-200">
                 {quizOption.difficulties.map((item, index) => (
                   <li
-                    onClick={() => onDifficulty(item)}
+                    onClick={() => handleDifficulty(item)}
                     key={index}
                     className={`px-4 py-2 text-sm font-semibold text-purple-600 bg-gray-50 font-poppins md:text-base  ${
                       difficulty === item
