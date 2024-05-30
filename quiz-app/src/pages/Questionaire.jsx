@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa6";
 
-
 const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
   const [questions, setQuestions] = useState([
     {
