@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import ResultCard from "../components/ResultCard";
-import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 
 const ScoreResult = ({ questions, answers }) => {
   const [scoreMessage, setScoreMessage] = useState("");
   const navigate = useNavigate();
+
+  //count all true answer
   const countCorrectAnswer = () => {
     const correctAnswer = answers.resultAnswer.filter(
       (item) => item === true
@@ -13,25 +14,27 @@ const ScoreResult = ({ questions, answers }) => {
 
     return correctAnswer;
   };
+
+  //Score Message
   useEffect(() => {
     let message;
 
-    switch (true) {
-      case countCorrectAnswer() === 10:
-        message = "Outstanding";
-        break;
-      case countCorrectAnswer() >= 7:
-        message = "Excellent";
-        break;
-      case countCorrectAnswer() >= 5:
-        message = "Good Job";
-        break;
-      default:
-        message = "Well Played";
+    const correctAnswers = countCorrectAnswer();
+
+    if (correctAnswers === 10) {
+      message = "Outstanding";
+    } else if (correctAnswers >= 7) {
+      message = "Excellent";
+    } else if (correctAnswers >= 5) {
+      message = "Good Job";
+    } else if (correctAnswers > 1) {
+      message = "Well Played";
+    } else {
+      message = "Try Again";
     }
 
     setScoreMessage(message);
-  }, []);
+  }, [countCorrectAnswer]);
 
   const handlePlayAgain = () => {
     navigate("/");

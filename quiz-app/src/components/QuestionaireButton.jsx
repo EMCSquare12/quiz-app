@@ -12,6 +12,8 @@ const QuestionaireButton = ({
   const [isClick, setIsClick] = useState(false);
   const clickRef = useRef(null);
 
+
+  //set the background color of button to default if click outside of its component
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (clickRef.current && !clickRef.current.contains(event.target)) {

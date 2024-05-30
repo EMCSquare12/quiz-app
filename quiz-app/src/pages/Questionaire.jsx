@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa6";
-import Header from "../components/Header";
+
 
 const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
   const [questions, setQuestions] = useState([
@@ -39,7 +39,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     callbackQuestions(formattedData);
   }, []);
 
-  //setValue from data props to setAnswers state
+  //Get all indeces of correct answer
   useEffect(() => {
     if (questions.length > 0) {
       const correctAnswerIndices = questions.map((item) =>
@@ -82,13 +82,14 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
     };
   }, [isClickPreview]);
 
+  //Shuffle all answer selection
   const shuffleArray = (array) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
   //onclick function for Next button
   const handleNext = () => {
-    // Make copies of the arrays to work with
+    // Copies of object of arrays of answer
     const selectedAnswer = [...answers.selectedAnswerIndex];
     const result = [...answers.resultAnswer];
     const correctAnswerIndex = [...answers.correctAnswerIndex];
@@ -160,7 +161,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
         <h1 className="w-full text-lg font-bold text-purple-900 font-poppins md:text-2xl">{`Question ${
           counter + 1
         }`}</h1>
-        <p className="w-full text-base font-semibold text-purple-900 font-poppins md:text-xl">
+        <p className="w-full -mb-4 text-base font-semibold text-purple-900 font-poppins md:text-xl">
           {questions[counter].question}
         </p>
         <div className="flex flex-col items-start justify-start w-full gap-4">

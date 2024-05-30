@@ -3,14 +3,8 @@ import Questionaire from "./pages/Questionaire";
 import ScoreResult from "./pages/ScoreResult";
 import HomePage from "./pages/HomePage";
 import Error from "./pages/Error";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
 
 function App() {
   const [answers, setAnswers] = useState([]);
@@ -24,11 +18,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={
-                <HomePage
-                  callBackData={(value) => setData(value)}
-                />
-              }
+              element={<HomePage callBackData={(value) => setData(value)} />}
             />
             <Route
               path="/questionaire"
