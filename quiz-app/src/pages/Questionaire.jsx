@@ -161,7 +161,7 @@ const Questionaire = ({ callbackQuestions, callbackAnswer, data }) => {
         <h1 className="w-full text-lg font-bold text-purple-900 font-poppins md:text-2xl">{`Question ${
           counter + 1
         }`}</h1>
-        <p className="w-full -mb-4 text-base font-semibold text-purple-900 font-poppins md:text-xl">
+        <p className="w-full -mb-0 text-base font-semibold text-purple-900 md:-mb-4 font-poppins md:text-xl">
           {questions[counter].question}
         </p>
         <div className="flex flex-col items-start justify-start w-full gap-4">
